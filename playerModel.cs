@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,7 +29,7 @@ namespace AllFiles.Library.Models {
             a.saveCurrentPlayerState(this);
         }
 
-        public List<playerModel> getStates() {
+        public List<(int, int)> getStates() {
             dataAccess a = new dataAccess();
             return a.loadAllPlayerStates();
         }
