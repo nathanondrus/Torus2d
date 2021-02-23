@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,25 +11,24 @@ using AllFiles.Library.Models;
 
 namespace AllFiles.DB {
     public class dataAccess {
-        public List<playerModel> loadAllPlayerStates() {
+        public List<(int, int)> loadAllPlayerStates() {
             using(IDbConnection cnn = new SQLiteConnection(loadConnectionString())) {
-
-                var output = cnn.Query<playerModel>("select * from playerPosition", new DynamicParameters());
-                return output.ToList();
+                cnn.Open();
+                return (List<(int, int)>)cnn.Query<(int, int)>("SELECT ALL x, y FROM playerPosition", new DynamicParameters());
             }
         }
 
         public void saveCurrentPlayerState(playerModel player) {
             
             using(IDbConnection cnn = new SQLiteConnection(loadConnectionString())) {
-
-                cnn.Execute("insert into playerPosition(x, y) values(@x, @y)", player);
+                cnn.Open();
+                cnn.Execute("INSERT INTO playerPosition (x, y) VALUES (@x, @y)", player);
                 Console.WriteLine($"{player.x}, {player.y}, {player}");
             }
                 
         }
 
-        private string loadConnectionString(string id = "playerPosition") {
+        private string loadConnectionString(string id = "DB") {
             return ConfigurationManager.ConnectionStrings[id].ConnectionString;
         }
     }
