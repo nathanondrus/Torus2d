@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,20 +10,23 @@ namespace AllFiles.DB {
     class dbTestFile { 
         static void Main() {
             playerModel p = new Library.Models.playerModel();
-            p.x = 38;
-            p.y = 21;
+            p.x = 34;
+            p.y = 545;
             p.Id = 0;
 
             try {
                 p.saveStateToDB();
-                var j = p.getStates();
-                Console.WriteLine(j);
+                List<(int, int)> j = p.getStates();
+                foreach((int, int) element in j) {
+                    Console.WriteLine($"{element}");
+                }
                 Console.WriteLine("Success!");
-                Console.ReadKey();
 
-            } catch(Exception) {
-                Console.WriteLine("Fail");
+
+            } finally {
+                Console.ReadKey();
             }
         }
     }
 }
+
